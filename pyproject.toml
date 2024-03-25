@@ -1,0 +1,86 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mrc2omezarr"
+dynamic = ["version"]
+dependencies = [
+    "numpy",
+    "click",
+    "mrcfile",
+    "ome-zarr",
+    "zarr",
+    "pydantic",
+    "fsspec",
+    "s3fs",
+    "sshfs",
+    "ngff-zarr"
+]
+authors = [
+  {name = "Utz H. Ermel", email = "utz.ermel@czii.org"},
+]
+description = "Command line tool to convert MRC-files to OME-Zarr."
+readme = "README.md"
+license = {file = "LICENSE"}
+
+[project.scripts]
+mrc2omezarr = "mrc2omezarr.cli:convert"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.semantic_release]
+version_variables = ["__init__.py:__version__"]
+build_command = "pip install build && python -m build"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "ipython",
+    "pre-commit",
+    "ruff",
+    "notebook",
+]
+
+[tool.black]
+line-length = 120
+target_version = ['py311']
+
+[tool.ruff]
+select = [
+    "E", "W",  # pycodestyle
+    "F",  # pyflakes
+    "B",  # bugbear
+    "I",  # isort
+    "N",  # pep8-naming
+    "ASYNC",  # async
+    "COM",  # commas
+    "C4",  # comprehensions
+    "DTZ",  # datetimez
+    "ISC",  # implicit-str-concat
+    "G",  # logging-format
+    "T20",  # print
+    "SIM",  # simplify
+]
+ignore = [
+    "E501",  # line too long
+    "C408",  # rewrite empty built-ins as literals
+    "T201",  # print statements.
+    "DTZ007", # Datetime objects without timezones.
+    "DTZ005", # More datetimes without timezones.
+]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.isort]
+known-first-party =["common"]
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.mypy]
+show_error_codes = true
+ignore_missing_imports = true
+warn_unreachable = true
+strict = true

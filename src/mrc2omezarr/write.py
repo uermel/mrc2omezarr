@@ -1,0 +1,41 @@
+from typing import List, Tuple
+
+import fsspec
+import numpy as np
+import ome_zarr.writer
+import zarr
+from pydantic_ome_ngff.v04 import Multiscale
+
+from mrc2omezarr.util import get_protocol
+
+
+class Writer:
+    def __init__(self, data: List[np.ndarray], meta: Multiscale) -> None:
+        self.data = data
+        self.meta = meta
+
+    def write(
+        self,
+        output_path: str,
+        overwrite: bool = True,
+        chunks: Tuple[int, int, int] = (256, 256, 256),
+        **kwargs,
+    ) -> None:
+        protocol, path = get_protocol(output_path)
+        if "auto_mkdir" in kwargs:
+            fs = fsspec.filesystem(protocol, **kwargs)
+        else:
+            fs = fsspec.filesystem(protocol, auto_mkdir=True, **kwargs)
+
+        loc = zarr.storage.FSStore(path, key_separator="/", mode="w", dimension_separator="/", fs=fs)
+        root_group = zarr.group(loc, overwrite=overwrite)
+
+        ome_zarr.writer.write_multiscale(
+            self.data,
+            group=root_group,
+            axes=[a.dict() for a in self.meta.axes],
+            coordinate_transformations=[mds.dict()["coordinateTransformations"] for mds in self.meta.datasets],
+            storage_options=dict(chunks=chunks, overwrite=overwrite),
+            compute=True,
+            metadata=self.meta.metadata,
+        )
