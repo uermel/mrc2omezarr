@@ -15,7 +15,7 @@ dependencies = [
     "fsspec",
     "s3fs",
     "sshfs",
-    "pydantic_ome_ngff"
+    "pydantic-ome-ngff"
 ]
 authors = [
   {name = "Utz H. Ermel", email = "utz.ermel@czii.org"},
