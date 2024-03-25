@@ -13,6 +13,14 @@ The original MRC-header is retained as a dictionary in the root .zattrs file.
 
 Input as well as output can be local or remote. For remote files include the protocol in the filename, e.g. `s3://bucket/path/to/file.mrc`.
 
+## Install
+
+```bash
+git clone git@github.com:czimaginginstitute/mrc2omezarr.git
+cd mrc2omezarr
+pip install .
+```
+
 ## Usage
 
 ```bash
