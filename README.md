@@ -16,7 +16,7 @@ Input as well as output can be local or remote. For remote files include the pro
 ## Install
 
 ```bash
-git clone [https://github.com/uermel/mrc2omezarr.git](https://github.com/uermel/mrc2omezarr.git)
+git clone https://github.com/uermel/mrc2omezarr.git
 cd mrc2omezarr
 pip install .
 ```
