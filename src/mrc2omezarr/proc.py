@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Tuple, Union
+from typing import Any, Dict, Literal, Optional, Tuple, Union
 
 from mrc2omezarr.convert import convert
 from mrc2omezarr.read import Reader
@@ -15,6 +15,7 @@ def convert_mrc_to_ngff(
     is_image_stack: Optional[bool] = None,
     chunk_size: Optional[Tuple[int, int, int]] = (256, 256, 256),
     filesystem_args: Optional[Dict[str, Any]] = None,
+    pyramid_method: Union[Literal["local_mean"], Literal["downsample"]] = "local_mean",
 ) -> None:
     if filesystem_args is None:
         filesystem_args = {}
@@ -43,7 +44,7 @@ def convert_mrc_to_ngff(
             },
         )
 
-    data_pyramid, meta_pyramid = convert(data, header, scale_maps, voxel_size=voxel_size)
+    data_pyramid, meta_pyramid = convert(data, header, scale_maps, voxel_size=voxel_size, pyramid_method=pyramid_method)
 
     writer = Writer(data_pyramid, meta_pyramid)
     writer.write(zarr_path, overwrite=overwrite, chunks=chunk_size, **filesystem_args)

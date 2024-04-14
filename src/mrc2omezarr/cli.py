@@ -59,6 +59,12 @@ from mrc2omezarr.util import get_filesystem_args
     default=None,
     help="Path to a JSON file containing additional arguments to pass to the fsspec-filesystem.",
 )
+@click.option(
+    "--pyramid-method",
+    type=str,
+    default="local_mean",
+    help="Method to downscale the data. Options: local_mean, downsample.",
+)
 @click.pass_context
 def convert(
     ctx,
@@ -71,6 +77,7 @@ def convert(
     is_image_stack,
     chunk_size,
     filesystem_args,
+    pyramid_method,
 ):
     scale_factors: Tuple[int, ...] = tuple([int(x) for x in scale_factors.split(",")])
 
@@ -90,6 +97,7 @@ def convert(
         is_image_stack,
         (chunk_size, chunk_size, chunk_size),
         filesystem_args,
+        pyramid_method,
     )
 
 

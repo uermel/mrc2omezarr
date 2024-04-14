@@ -11,11 +11,11 @@ dependencies = [
     "mrcfile",
     "ome-zarr",
     "zarr",
-    "pydantic",
+    "pydantic<2",
     "fsspec",
     "s3fs",
     "sshfs",
-    "pydantic-ome-ngff"
+    "pydantic-ome-ngff==0.3.0"
 ]
 authors = [
   {name = "Utz H. Ermel", email = "utz.ermel@czii.org"},
