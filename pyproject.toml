@@ -4,6 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mrc2omezarr"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+]
 dynamic = ["version"]
 dependencies = [
     "numpy",
