@@ -29,7 +29,7 @@ mrc2omezarr = "mrc2omezarr.cli:convert"
 source = "vcs"
 
 [tool.hatch.build.hooks.vcs]
-version-file = "_version.py"
+version-file = "src/mrc2omezarr/_version.py"
 
 [project.optional-dependencies]
 dev = [
