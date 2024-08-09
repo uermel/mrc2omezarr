@@ -1,6 +1,5 @@
 from typing import List, Tuple
 
-import mrcfile
 import numpy as np
 from pydantic import BaseModel
 
@@ -108,14 +107,3 @@ class MrcHeader(BaseModel):
     @property
     def is_image_stack(self) -> bool:
         return self.nz == 1
-
-
-if __name__ == "__main__":
-    import numpy as np
-
-    # a = np.zeros(1, dtype=HEADER_DTYPE)
-    with mrcfile.open("/Users/utz.ermel/Documents/test_zarr/mrc2omezarr/TS_041.mrc") as mrc:
-        a = mrc.header
-    b = MrcHeader.from_header(a)
-
-    print(b.dict())
