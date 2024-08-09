@@ -10,15 +10,13 @@ dependencies = [
     "click",
     "mrcfile",
     "ome-zarr",
-    "zarr",
-    "pydantic<2",
+    "zarr<3",
+    "pydantic>2",
     "fsspec",
-    "s3fs",
-    "sshfs",
-    "pydantic-ome-ngff==0.3.0"
+    "pydantic-ome-ngff"
 ]
 authors = [
-  {name = "Utz H. Ermel", email = "utz.ermel@czii.org"},
+  {name = "Utz H. Ermel", email = "utz@ermel.me"},
 ]
 description = "Command line tool to convert MRC-files to OME-Zarr."
 readme = "README.md"
@@ -30,9 +28,8 @@ mrc2omezarr = "mrc2omezarr.cli:convert"
 [tool.hatch.version]
 source = "vcs"
 
-[tool.semantic_release]
-version_variables = ["__init__.py:__version__"]
-build_command = "pip install build && python -m build"
+[tool.hatch.build.hooks.vcs]
+version-file = "_version.py"
 
 [project.optional-dependencies]
 dev = [

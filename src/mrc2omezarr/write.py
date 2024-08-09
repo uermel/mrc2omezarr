@@ -4,13 +4,13 @@ import fsspec
 import numpy as np
 import ome_zarr.writer
 import zarr
-from pydantic_ome_ngff.v04 import Multiscale
+from pydantic_ome_ngff.v04 import MultiscaleMetadata
 
 from mrc2omezarr.util import get_protocol
 
 
 class Writer:
-    def __init__(self, data: List[np.ndarray], meta: Multiscale) -> None:
+    def __init__(self, data: List[np.ndarray], meta: MultiscaleMetadata) -> None:
         self.data = data
         self.meta = meta
 
@@ -33,8 +33,10 @@ class Writer:
         ome_zarr.writer.write_multiscale(
             self.data,
             group=root_group,
-            axes=[a.dict() for a in self.meta.axes],
-            coordinate_transformations=[mds.dict()["coordinateTransformations"] for mds in self.meta.datasets],
+            axes=[a.model_dump() for a in self.meta.axes],
+            coordinate_transformations=[
+                list(mds.model_dump()["coordinateTransformations"]) for mds in self.meta.datasets
+            ],
             storage_options=dict(chunks=chunks, overwrite=overwrite),
             compute=True,
             metadata=self.meta.metadata,
