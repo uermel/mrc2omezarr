@@ -26,6 +26,11 @@ authors = [
 description = "Command line tool to convert MRC-files to OME-Zarr."
 readme = "README.md"
 license = {file = "LICENSE"}
+keywords = ["cryoet", "cryo-et", "tomography", "zarr", "ome", "mrc", "conversion"]
+
+[project.urls]
+Repository = "https://github.com/uermel/mrc2omezarr.git"
+Issues = "https://github.com/uermel/mrc2omezarr/issues"
 
 [project.scripts]
 mrc2omezarr = "mrc2omezarr.cli:convert"
@@ -80,9 +85,3 @@ known-first-party =["common"]
 
 [tool.ruff.flake8-quotes]
 docstring-quotes = "double"
-
-[tool.mypy]
-show_error_codes = true
-ignore_missing_imports = true
-warn_unreachable = true
-strict = true
