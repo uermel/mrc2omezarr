@@ -22,10 +22,12 @@ class Writer:
         **kwargs,
     ) -> None:
         protocol, path = get_protocol(output_path)
-        if "auto_mkdir" in kwargs:
-            fs = fsspec.filesystem(protocol, **kwargs)
-        else:
-            fs = fsspec.filesystem(protocol, auto_mkdir=True, **kwargs)
+
+        if protocol in ["file", "local"]:
+            am = kwargs.get("auto_mkdir", True)
+            kwargs["auto_mkdir"] = am
+
+        fs = fsspec.filesystem(protocol, **kwargs)
 
         loc = zarr.storage.FSStore(path, key_separator="/", mode="w", dimension_separator="/", fs=fs)
         root_group = zarr.group(loc, overwrite=overwrite)
